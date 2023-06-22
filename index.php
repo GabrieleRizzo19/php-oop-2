@@ -1,3 +1,12 @@
+<?php 
+
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,25 +21,32 @@
         <?php 
 
             // foreach(glob("Models/*.php") as $class){
-            //     require __DIR__ . $class;
+            //     require $class;
             // }
 
-            require __DIR__ . '/Models/Categoria.php';
-            require __DIR__ . '/Models/Prodotto.php';
-            require __DIR__ . '/Models/Cibo.php';
-            require __DIR__ . '/Models/Gioco.php';
-            require __DIR__ . '/Models/Tappetino.php';
+            require_once __DIR__ . '/Models/Categoria.php';
+            require_once __DIR__ . '/Models/Prodotto.php';
+            require_once __DIR__ . '/Models/Cibo.php';
+            require_once __DIR__ . '/Models/Gioco.php';
+            require_once __DIR__ . '/Models/Tappetino.php';
 
             $categoriaCane = new Categoria('Cane');
             $categoriaGatto = new Categoria('Gatto');
             $categoriaGenerica = new Categoria('Generica');
 
-            $spazzola = new Prodotto('Spazzola', '4.99', $categoriaGenerica, './img/spazzola.jpg');
+            $spazzola = new Prodotto('Spazzola', 'provaexception', $categoriaGenerica, './img/spazzola.jpg');
             $croccantiniCanePollo = new Cibo('Croccantini al pollo', '9.99', $categoriaCane, 'https://baiuland.it/bianchi/wp-content/uploads/2019/09/croccantini.png', 'Pollo');
             $croccantiniGattoPesce = new Cibo('Croccantini al pesce', '11.99', $categoriaGatto, 'https://www.zooplanetvergato.it/wp-content/uploads/2023/06/07613035424937_Sterilizzato-Salmone_Verdure-1_VANB43426-1-1-1-1-1-1-1-1-1-1-1-1-1-1.png', 'Pesce');
             $osso = new Gioco('Osso', '3.99', $categoriaCane, 'https://static.zoomalia.com/prod_img/34858/la_98ed3d2c21991e3bef5e069713af9fa6ca1617356340.jpg', 'Marrone');
             $gomitolo = new Gioco('Gomitolo', '2.99', $categoriaGatto, 'https://img.pixers.pics/pho_wat(s3:700/FO/53/72/75/69/700_FO53727569_edb8527920a8714cb5ae28ba67b43c6d.jpg,700,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,480,650,jpg)/adesivi-gatto-con-gomitolo-di-lana.jpg.jpg', 'Rosso');
             $tappetiniCarbone = new Tappetino('Tappetini al carbone', '8.99', $categoriaCane, 'https://m.media-amazon.com/images/I/81y8oTyF4HL._AC_UF1000,1000_QL80_.jpg', '60x90');
+
+            $spazzola->setWeight(2.45,'prova');
+            $croccantiniCanePollo->setWeight(2.45,'prova');
+            $croccantiniGattoPesce->setWeight(2.45,'prova');
+            $osso->setWeight(2.45,'prova');
+            $gomitolo->setWeight(2.45,'prova');
+            $tappetiniCarbone->setWeight(2.45,'prova');
         
             $arrayProdotti = [$spazzola, $croccantiniCanePollo, $croccantiniGattoPesce, $osso, $gomitolo, $tappetiniCarbone];
         ?>
@@ -54,8 +70,24 @@
                         <div class="card-body">
                             <p class="card-text m-0">Tipo: <?php echo get_class($prodotto) ?></p>
                             <p class="card-text m-0">Categoria: <?php echo $prodotto->categoria->icon; echo $prodotto->categoria->nome ?></p>
-                            <p class="card-text m-0">Prezzo: <?php echo $prodotto->prezzo ?></p>
+                            <p class="card-text m-0">
+                                Prezzo: 
+                                <?php
+                                try{
+                                    echo $prodotto->getPrezzo(); 
+                                }catch(Exception $e){
+                                    echo "Eccezione : " . $e->getMessage();
+                                }
+                                ?>
+                            </p>
+                            <p class="card-text m-0">
+                                Peso: 
+                                <?php 
+                                
+                                    echo $prodotto->getWeight();
 
+                                ?>
+                            </p>
                             <?php if($prodotto instanceof Cibo){ ?>
                                 <p class="card-text m-0">Gusto: <?php echo $prodotto->gusto ?></p>
                             <?php } ?>

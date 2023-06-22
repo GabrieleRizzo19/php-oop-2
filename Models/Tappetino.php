@@ -4,7 +4,7 @@
 
         public $dimensione;
 
-        public function __construct($nome = 'Tappetino', $prezzo = '0', $categoria, $img, $dimensione = '60x60')
+        public function __construct($nome, $prezzo, $categoria, $img, $dimensione)
         {
             parent::__construct($nome, $prezzo, $categoria, $img);
 

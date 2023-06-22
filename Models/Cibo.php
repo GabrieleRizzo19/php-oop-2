@@ -4,7 +4,7 @@
 
         public $gusto;
 
-        public function __construct($nome = 'Croccantini', $prezzo = '0', $categoria, $img, $gusto = 'Pollo')
+        public function __construct($nome, $prezzo, $categoria, $img, $gusto)
         {
             parent::__construct($nome, $prezzo, $categoria, $img);
 

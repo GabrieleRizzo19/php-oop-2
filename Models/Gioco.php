@@ -4,7 +4,7 @@
 
         public $colore;
 
-        public function __construct($nome = 'Gioco', $prezzo = '0', $categoria, $img, $colore = 'Bianco')
+        public function __construct($nome, $prezzo, $categoria, $img, $colore)
         {
             parent::__construct($nome, $prezzo, $categoria, $img);
 
